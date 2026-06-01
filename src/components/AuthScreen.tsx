@@ -18,9 +18,7 @@ export function AuthScreen({ onLogin, savedProfiles }: AuthScreenProps) {
 
   // Simulated Gmail Login accounts
   const mockGmailAccounts = [
-    { email: 'formandseek.shop@gmail.com', name: 'Form&Seek Shop', pic: '/form_and_seek_logo.png', username: 'formandseek.shop' },
-    { email: 'nasa.universe@gmail.com', name: 'NASA Explorer', pic: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=150&q=80', username: 'nasa' },
-    { email: 'archdaily.editorial@gmail.com', name: 'ArchDaily Team', pic: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=150&q=80', username: 'archdaily' }
+    { email: 'kullanici@gmail.com', name: 'Kullanıcı Adın', pic: '/default_avatar.png', username: 'kullanici_adin' }
   ];
 
   const handleEmailAuthSubmit = (e: React.FormEvent) => {
