@@ -7,10 +7,10 @@ const defaultUserId = 'user_1';
 
 const defaultProfile: UserProfile = {
   id: defaultUserId,
-  username: 'kullanici_adi',
-  fullName: 'Kullanıcı Adı',
+  username: 'kullanici_adin',
+  fullName: 'Kullanıcı Adın',
   bio: '',
-  profilePic: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80', // Generic neat modern avatar
+  profilePic: '/default_avatar.png',
   postsCount: 0,
   followersCount: 0,
   followingCount: 0,

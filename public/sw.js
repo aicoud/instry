@@ -1,9 +1,10 @@
 const CACHE_NAME = 'gridpreview-cache-v1';
 const ASSETS = [
   '/',
-  '/index.html',
   '/manifest.json',
+  '/index.html',
   '/form_and_seek_logo.png',
+  '/default_avatar.png',
   '/post_1.png',
   '/post_2.png',
   '/post_3.png',

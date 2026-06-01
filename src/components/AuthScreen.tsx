@@ -7,10 +7,12 @@ interface AuthScreenProps {
 }
 
 export function AuthScreen({ onLogin, savedProfiles }: AuthScreenProps) {
-  const [authMode, setAuthMode] = useState<'main' | 'email_login' | 'email_register' | 'gmail_sim'>('main');
+  const [authMode, setAuthMode] = useState<'main' | 'email_login' | 'email_register' | 'gmail_sim' | 'email_verify'>('main');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [generatedOtp, setGeneratedOtp] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -38,9 +40,36 @@ export function AuthScreen({ onLogin, savedProfiles }: AuthScreenProps) {
     // Simulate server request delay
     setTimeout(() => {
       setIsSubmitting(false);
-      const targetUser = username ? username.trim().toLowerCase() : email.split('@')[0].trim().toLowerCase();
-      onLogin(targetUser || 'kullanici_adi');
+      if (authMode === 'email_register') {
+        // Generate a random 4-digit code and shift to Verification Mode
+        const code = Math.floor(1000 + Math.random() * 9000).toString();
+        setGeneratedOtp(code);
+        setAuthMode('email_verify');
+      } else {
+        const targetUser = username ? username.trim().toLowerCase() : email.split('@')[0].trim().toLowerCase();
+        onLogin(targetUser || 'kullanici_adin');
+      }
     }, 1200);
+  };
+
+  const handleVerifyOtpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode) {
+      setErrorMessage('Lütfen 4 haneli onay kodunu girin.');
+      return;
+    }
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      if (otpCode === generatedOtp) {
+        const targetUser = username ? username.trim().toLowerCase() : email.split('@')[0].trim().toLowerCase();
+        onLogin(targetUser || 'kullanici_adin');
+      } else {
+        setErrorMessage('Hatalı onay kodu! Lütfen tekrar deneyin.');
+      }
+    }, 1000);
   };
 
   const handleGmailLogin = (username: string) => {
@@ -357,6 +386,75 @@ export function AuthScreen({ onLogin, savedProfiles }: AuthScreenProps) {
               </button>
             </div>
           </div>
+        )}
+
+        {/* SCREEN 4: EMAIL VERIFICATION (OTP) */}
+        {authMode === 'email_verify' && (
+          <form onSubmit={handleVerifyOtpSubmit} className="w-full flex flex-col gap-4 animate-fade-in">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-lg font-bold text-gray-800">E-Posta Adresinizi Onaylayın</h3>
+              <p className="text-xs text-gray-500 font-medium leading-relaxed">
+                Lütfen <strong className="text-gray-700">{email}</strong> adresine gönderilen 4 haneli onay kodunu girin.
+              </p>
+            </div>
+
+            {/* Notification Banner with Mock Code for high-fidelity demo simulation */}
+            <div className="bg-blue-50 text-blue-800 text-xs rounded-xl p-3 border border-blue-100 flex flex-col gap-1">
+              <span className="font-bold flex items-center gap-1">
+                📬 Simüle Edilen E-Posta Bildirimi:
+              </span>
+              <span>
+                "Instry'e hoş geldiniz! Onay kodunuz: <strong className="text-blue-900 text-sm font-extrabold">{generatedOtp}</strong>"
+              </span>
+            </div>
+
+            {errorMessage && (
+              <div className="bg-red-50 text-red-600 text-xs rounded-xl p-3 border border-red-100 flex items-start gap-2">
+                <MailWarning className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-1">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1">Onay Kodu</label>
+              <input 
+                type="text" 
+                maxLength={4}
+                placeholder="0 0 0 0" 
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                className="w-full bg-gray-50 border border-gray-200 focus:border-gray-400 rounded-xl px-4 py-3.5 text-center text-lg font-extrabold tracking-[0.5em] outline-none transition-all"
+              />
+            </div>
+
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold rounded-xl py-3.5 text-xs flex items-center justify-center gap-1.5 shadow-md disabled:opacity-50 transition active:scale-[0.99] cursor-pointer mt-1"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Doğrulanıyor...
+                </>
+              ) : (
+                <>
+                  Kodu Doğrula ve Giriş Yap
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+
+            <div className="flex justify-between items-center mt-2 px-1">
+              <button 
+                type="button"
+                onClick={() => setAuthMode('email_register')}
+                className="text-xs font-bold text-gray-500 hover:text-gray-800"
+              >
+                Geri Dön
+              </button>
+            </div>
+          </form>
         )}
 
       </div>
