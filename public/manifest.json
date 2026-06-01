@@ -1,0 +1,23 @@
+{
+  "short_name": "GridPreview",
+  "name": "GridPreview - Instagram Estetiğini Önizle",
+  "description": "Instagram feedinizi önizleyin, gönderilerinizi planlayın ve tasarımlarınızı offline olarak yönetin.",
+  "icons": [
+    {
+      "src": "/form_and_seek_logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/form_and_seek_logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait"
+}

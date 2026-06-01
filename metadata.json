@@ -1,0 +1,6 @@
+{
+  "name": "GridPreview",
+  "description": "Kişisel bir Instagram profil önizleme ve fotoğraf düzenleme albümü.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
