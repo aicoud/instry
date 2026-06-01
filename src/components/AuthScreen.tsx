@@ -64,7 +64,7 @@ export function AuthScreen({ onLogin, savedProfiles }: AuthScreenProps) {
             <path d="M12 3v18" />
           </svg>
         </div>
-        <h1 className="text-4xl font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>GridPreview</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Instry</h1>
         <p className="text-xs font-semibold text-gray-400 mt-1 uppercase tracking-widest">Estetiğini Önizle</p>
       </div>
 
