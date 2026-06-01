@@ -21,6 +21,7 @@ export interface PostMedia {
   imageUrl: string;
   filterClass: string;
   customFilters: CustomFilters;
+  aspectRatio?: 'square' | 'portrait' | 'landscape'; // Canvas aspect ratios
 }
 
 export interface Post {

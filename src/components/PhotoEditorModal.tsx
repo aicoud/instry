@@ -33,7 +33,8 @@ export function PhotoEditorModal({ onClose, onSave }: PhotoEditorModalProps) {
           resolve({
             imageUrl: event.target?.result as string,
             filterClass: '',
-            customFilters: { ...defaultCustomFilters }
+            customFilters: { ...defaultCustomFilters },
+            aspectRatio: 'square'
           });
         };
         reader.readAsDataURL(file as File);
@@ -122,9 +123,13 @@ export function PhotoEditorModal({ onClose, onSave }: PhotoEditorModalProps) {
         {step === 'filter' && mediaItems.length > 0 && activeMedia && (
           <div className="flex flex-col h-full bg-white">
             {/* Image Preview Container */}
-            <div className="w-full aspect-square bg-gray-900 shrink-0 relative overflow-hidden">
+            <div className="w-full aspect-square bg-gray-950 shrink-0 relative overflow-hidden flex items-center justify-center">
                <div 
-                 className="flex h-full w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                 className={`flex w-full overflow-x-auto snap-x snap-mandatory scrollbar-hide transition-all duration-300 ${
+                   activeMedia.aspectRatio === 'portrait' ? 'aspect-[4/5] h-full max-h-[80%] max-w-[80%]' : 
+                   activeMedia.aspectRatio === 'landscape' ? 'aspect-[16/9] w-full h-auto max-h-[56.25%]' : 
+                   'aspect-square h-full w-full'
+                 }`}
                  onScroll={(e) => {
                     const scrollLeft = e.currentTarget.scrollLeft;
                     const width = e.currentTarget.clientWidth;
@@ -132,7 +137,7 @@ export function PhotoEditorModal({ onClose, onSave }: PhotoEditorModalProps) {
                  }}
                >
                  {mediaItems.map((m, idx) => (
-                    <div key={idx} className="w-full h-full shrink-0 snap-center relative">
+                    <div key={idx} className="w-full h-full shrink-0 snap-center relative bg-gray-900">
                       <img 
                         src={m.imageUrl} 
                         alt="Preview" 
@@ -140,6 +145,22 @@ export function PhotoEditorModal({ onClose, onSave }: PhotoEditorModalProps) {
                         style={getFilterStyle(m.customFilters)}
                       />
                     </div>
+                 ))}
+               </div>
+               
+               {/* Aspect Ratio Canvas Chooser Overlay (Instagram Style Bottom Left Button) */}
+               <div className="absolute bottom-3 left-3 flex gap-1 bg-black/60 backdrop-blur-md rounded-xl p-1 z-10">
+                 {(['square', 'portrait', 'landscape'] as const).map((ratio) => (
+                   <button
+                     key={ratio}
+                     type="button"
+                     onClick={() => updateActiveMedia({ aspectRatio: ratio })}
+                     className={`px-2.5 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition ${
+                       activeMedia.aspectRatio === ratio ? 'bg-white text-black shadow-sm' : 'text-white hover:bg-white/10'
+                     }`}
+                   >
+                     {ratio === 'square' ? '1:1' : ratio === 'portrait' ? '4:5' : '16:9'}
+                   </button>
                  ))}
                </div>
                
@@ -157,12 +178,14 @@ export function PhotoEditorModal({ onClose, onSave }: PhotoEditorModalProps) {
               {/* Tab Bar */}
               <div className="flex border-b border-gray-200 shrink-0">
                 <button 
+                  type="button"
                   className={`flex-1 py-3 text-sm font-semibold border-b-2 ${!activeAdustment ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
                   onClick={() => setActiveAdjustment(null)}
                 >
                   Filtreler
                 </button>
                 <button 
+                  type="button"
                   className={`flex-1 py-3 text-sm font-semibold border-b-2 ${activeAdustment ? 'border-black text-black' : 'border-transparent text-gray-400'}`}
                   onClick={() => setActiveAdjustment('brightness')}
                 >
