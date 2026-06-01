@@ -9,11 +9,11 @@ const defaultProfile: UserProfile = {
   id: defaultUserId,
   username: 'kullanici_adi',
   fullName: 'Kullanıcı Adı',
-  bio: 'Bu bir deneme profilidir. Kendi içeriklerinizi yükleyerek profilinizin nasıl görüneceğini test edebilirsiniz.',
-  profilePic: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+  bio: '',
+  profilePic: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80', // Generic neat modern avatar
   postsCount: 0,
-  followersCount: 1250,
-  followingCount: 340,
+  followersCount: 0,
+  followingCount: 0,
 };
 
 const defaultState: AppState = {
