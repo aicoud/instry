@@ -228,7 +228,7 @@ export function ProfileLayout({ profile, posts, onEditProfileClick, onPostClick,
                     key={post.id}
                     className={`break-inside-avoid mb-0.5 cursor-pointer relative overflow-hidden bg-gray-100 group transition-all duration-200 ${
                       isEditMode ? 'hover:scale-[0.98] ring-offset-1 select-none' : ''
-                    } ${isSelectedForSwap ? 'ring-4 ring-blue-500 scale-[0.96] opacity-90 z-10' : ''}`}
+                    } ${isSelectedForSwap ? 'ring-4 ring-blue-500 scale-[0.96] opacity-60 z-10' : ''}`}
                     onClick={() => handlePostClick(post)}
                     draggable={isEditMode}
                     onDragStart={(e) => handleDragStart(e, index)}
